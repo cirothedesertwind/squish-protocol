@@ -17,7 +17,9 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
 * **Null**
 * **Boolean**
 * **Integer**
+    * byte, short, int, long, ubyte, ushort, uint, ulong
 * **Floating Point**
+    * float, double
 * **String**
 * **Dates and Times**
 * **Array**
