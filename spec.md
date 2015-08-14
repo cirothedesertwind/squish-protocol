@@ -14,7 +14,8 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
 
 ## Primitive Types
 
-* **Null**
+* **Option**
+    * A metatype that allows for the inclusion of a None type or a Some type which contains the variant of primitive type specified in the message specification. 
 * **Boolean**
 * **Integer**
     * byte, short, int, long, ubyte, ushort, uint, ulong
