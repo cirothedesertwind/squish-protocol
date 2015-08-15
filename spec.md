@@ -17,14 +17,23 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
 * **Option**
     * A metatype that allows for the inclusion of a None type or a Some type which contains the variant of primitive type specified in the message specification. 
 * **Boolean**
+    * True (0xFF) and False (0x00)
 * **Integer**
-    * byte, short, int, long, ubyte, ushort, uint, ulong
+    * byte, short, int, long, ubyte, ushort, uint, ulong, varint
+    * Integers are encoded using Big-Endian notation (like Java)
+    * varint represents a variable-sized positive integer up to 2^31-1 (Java's Integer.MAX_VALUE)
+        * [0-127] can be represented as the number itself
+        * [128-256] is preceded by 0xB1
+        * [257-65536] is preceded by 0xB2
+        * [65537-2^31-1] is preceded by 0xB3
 * **Floating Point**
     * float, double
+    * Uses the IEEE 754-2008 standard.
 * **String**
-* **Dates and Times**
+    * A string is a varint specifying the length of the string in bytes followed by the UTF-8 encoded string.
 * **Array**
 * **Map**
+* **Dates and Times**
 * **Binary**
 
 ## Modes
