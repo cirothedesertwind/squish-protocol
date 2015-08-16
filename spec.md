@@ -25,7 +25,7 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
         * [0-127] can be represented as the number itself
         * [128-256] is preceded by 0xB1
         * [257-65536] is preceded by 0xB2
-        * [65537-2^31-1] is preceded by 0xB3
+        * [65537-2^31-1] is preceded by 0xB4
 * **Floating Point**
     * float, double
     * Uses the IEEE 754-2008 standard.
