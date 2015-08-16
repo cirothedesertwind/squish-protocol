@@ -3,6 +3,7 @@ package com.codingcrucible.squishprotocol;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.BitSet;
 
 /**
  * Squish is a class which allows users to build Squish messages in ByteBuffers
@@ -268,7 +269,23 @@ public final class Squish {
         putVarInt(b, a.length);
         b.asLongBuffer().put(a);
     }
+    
+    public static final void put(ByteBuffer b, float[] a) {
+        putVarInt(b, a.length);
+        b.asFloatBuffer().put(a);
+    }
 
+    public static final void put(ByteBuffer b, double[] a) {
+        putVarInt(b, a.length);
+        b.asDoubleBuffer().put(a);
+    }
+    
+    public static final void put(ByteBuffer b, boolean[] a) {
+        putVarInt(b, a.length);
+        for (int i = 0; i < a.length; i++)
+            put(b, a[i]);
+    }
+    
     public static final void putUByteArray(ByteBuffer b, int[] a) {
         putVarInt(b, a.length);
         for (int i = 0; i < a.length; i++)
@@ -341,6 +358,34 @@ public final class Squish {
 
         return dst;
     }
+    
+    public static final float[] getFLoatArray(ByteBuffer b) {
+        int length = getVarInt(b);
+
+        float[] dst = new float[length];
+        b.asFloatBuffer().get(dst);
+
+        return dst;
+    }
+    
+    public static final double[] getDoubleArray(ByteBuffer b) {
+        int length = getVarInt(b);
+
+        double[] dst = new double[length];
+        b.asDoubleBuffer().get(dst);
+
+        return dst;
+    }
+    
+    public static final boolean[] getBooleanArray(ByteBuffer b) {
+        int length = getVarInt(b);
+        boolean[] dst = new boolean[length];
+        
+        for (int i = 0; i < dst.length; i++)
+            dst[i] = getBoolean(b);
+        
+        return dst;
+    }
 
     public static final int[] getUByteArray(ByteBuffer b) {
         int length = getVarInt(b);
@@ -390,6 +435,38 @@ public final class Squish {
             dst[i] = getVarInt(b);
         
         return dst;
+    }
+    
+    public static final void putStringArray(ByteBuffer b, String[] a){
+        putVarInt(b, a.length);
+        for (int i = 0; i < a.length; i++)
+            putString(b, a[i]);
+    }
+    
+    public static final String[] getStringArray(ByteBuffer b){
+        int length = getVarInt(b);
+        String[] dst = new String[length];
+        
+        for (int i = 0; i < dst.length; i++)
+            dst[i] = getString(b);
+        
+        return dst;
+    }
+    
+    public static final void putBitArray(ByteBuffer b, BitSet bits){
+        byte[] bitSetAsBytes = bits.toByteArray();
+
+        putVarInt(b, bitSetAsBytes.length);
+        b.put(bitSetAsBytes);
+    }
+    
+    public static final BitSet getBitArray(ByteBuffer b){
+        int lengthInBytes = getVarInt(b);
+
+        byte[] bitSetAsBytes = new byte[lengthInBytes];
+        b.get(bitSetAsBytes);
+
+        return BitSet.valueOf(bitSetAsBytes);
     }
     
 }
