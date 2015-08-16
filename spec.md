@@ -32,6 +32,10 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
 * **String**
     * A string is a varint specifying the length of the string in bytes followed by the UTF-8 encoded string.
 * **Array**
+    * All arrays are of a single type.
+    * Arrays support byte, short, int, long, ubyte, ushort, uint, ulong, varint, bool, float, double, String primitives.
+* **Bit Array**
+    * An array of bits.
 * **Map**
 * **Dates and Times**
 * **Binary**
