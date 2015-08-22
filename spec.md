@@ -37,12 +37,10 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
     * For an array of boolean values, use a bit array for a more compressed representation.
 * **Bit Array**
     * An array of bits.
-* **Map**
-    * A map ordered by insertion order.
-    * Keys are byte, short, int, long, ubyte, ushort, uint, ulong, float, double, String primitives.
-    * Objects are byte, short, int, long, ubyte, ushort, uint, ulong, varint, float, double, String, any array, BitSet, and Binary data.
 * **Dates and Times**
 * **Binary**
+* **Message**
+    * A message is also a primitive so messages can contain sub-messages to group certain data together.
 
 ## Modes
 

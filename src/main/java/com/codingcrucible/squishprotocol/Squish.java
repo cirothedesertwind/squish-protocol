@@ -4,9 +4,6 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Squish is a class which allows users to build Squish messages in ByteBuffers
@@ -454,19 +451,6 @@ public final class Squish {
         b.get(bitSetAsBytes);
 
         return BitSet.valueOf(bitSetAsBytes);
-    }
-    
-    public static final void put(ByteBuffer b, SquishMap m){
-        m.writeMap(b);
-    }
-    
-    public static final ByteBuffer getMapData(ByteBuffer b){
-        int lengthInBytes = getVarInt(b);
-
-        byte[] mapData = new byte[lengthInBytes];
-        b.get(mapData);
-
-        return ByteBuffer.wrap(mapData);
     }
     
 }
