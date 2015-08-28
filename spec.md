@@ -23,9 +23,9 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
     * Integers are encoded using Big-Endian notation (like Java)
     * varint represents a variable-sized positive integer up to 2^31-1 (Java's Integer.MAX_VALUE)
         * [0-127] can be represented as the number itself
-        * [128-256] is preceded by 0xB1
-        * [257-65536] is preceded by 0xB2
-        * [65537-2^31-1] is preceded by 0xB4
+        * [128-256] is a single byte preceded by 0xB1
+        * [257-65536] is two bytes preceded by 0xB2
+        * [65537-2^31-1] is four bytes long and preceded by 0xB4
 * **Floating Point**
     * float, double
     * Uses the IEEE 754-2008 standard.
