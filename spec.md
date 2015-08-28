@@ -48,3 +48,28 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
 * **Single Family**
 * **Cross Family Multi Message**
 * **Single Message**
+
+## Handshake Process
+
+The handshaking process is based on the concept of token authentication. The first part of the handshaking process the user will login into an SSL secured websocket to access a time-limited token which they can then access an unsecure connection.
+
+Phase I
+
+* Request Connection
+* Welcome
+* Request Credentials
+* Provide Credentials
+* Accept with Token / Reject
+
+Phase II
+
+* Request Connection
+* Welcome
+* Request Token
+* Provide Token
+* Accept / Reject
+
+
+
+
+
