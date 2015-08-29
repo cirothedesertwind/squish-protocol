@@ -38,6 +38,7 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
 * **Bit Array**
     * An array of bits.
 * **Dates and Times**
+* A date or time is a varint specifying the length of the encoding string and the date or time or both represented as a string according to [RFC3339](https://tools.ietf.org/html/rfc3339).
 * **Binary**
 * **Message**
     * A message is also a primitive so messages can contain sub-messages to group certain data together.
