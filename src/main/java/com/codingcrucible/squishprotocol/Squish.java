@@ -441,16 +441,18 @@ public final class Squish {
         byte[] bitSetAsBytes = bits.toByteArray();
 
         putVarInt(b, bitSetAsBytes.length);
+        putVarInt(b, bits.length());
         b.put(bitSetAsBytes);
     }
     
     public static final BitSet getBitArray(ByteBuffer b){
         int lengthInBytes = getVarInt(b);
+        int nBits = getVarInt(b);
 
         byte[] bitSetAsBytes = new byte[lengthInBytes];
         b.get(bitSetAsBytes);
 
-        return BitSet.valueOf(bitSetAsBytes);
+        return BitSet.valueOf(bitSetAsBytes).get(0, nBits);
     }
     
 }

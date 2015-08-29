@@ -37,6 +37,7 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
     * For an array of boolean values, use a bit array for a more compressed representation.
 * **Bit Array**
     * An array of bits.
+    * A bit array is a varint specifying the length of the array in bytes followed by another varint specifying the number of bits, followed by the bit array represented as a series of bytes.
 * **Dates and Times**
     * A date or time is a varint specifying the length of the encoding string and the date or time or both represented as a string according to [RFC3339](https://tools.ietf.org/html/rfc3339).
 * **Binary**
