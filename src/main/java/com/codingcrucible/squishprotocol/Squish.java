@@ -514,7 +514,7 @@ public final class Squish {
     public static final LocalDateTime getLocalDateTime(ByteBuffer b){
         byte[] dst = new byte[15];
         return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
-                               LOCAL_TIME);
+                               LOCAL_DATETIME);
     }
     
 }
