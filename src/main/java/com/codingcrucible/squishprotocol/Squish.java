@@ -3,6 +3,10 @@ package com.codingcrucible.squishprotocol;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.BitSet;
 
 /**
@@ -35,6 +39,12 @@ import java.util.BitSet;
  * @version 0.1
  */
 public final class Squish {
+    
+    private static final DateTimeFormatter LOCAL_TIME = 
+            DateTimeFormatter.ofPattern("HHmmss");
+    
+    private static final DateTimeFormatter LOCAL_DATETIME =
+            DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
 
     private static final byte NONE = (byte) 0xA0;
     private static final byte SOME = (byte) 0xA1;
@@ -453,6 +463,58 @@ public final class Squish {
         b.get(bitSetAsBytes);
 
         return BitSet.valueOf(bitSetAsBytes).get(0, nBits);
+    }
+    
+    /** Writes a binary.
+     * @param b,*
+     * @param bin the remaining bytes of the bin buffer as the binary*/
+     public static final void put(ByteBuffer b, ByteBuffer bin) {
+        putVarInt(b, bin.remaining());
+        b.put(bin);
+    }
+
+    public static final ByteBuffer get(ByteBuffer b) {
+        int lengthInBytes = getVarInt(b);
+
+        byte[] dst = new byte[lengthInBytes];
+        b.get(dst);
+
+        return ByteBuffer.wrap(dst);
+    }
+    
+    public static final void put(ByteBuffer b, LocalDate t){
+        byte[] stringAsBytes = t.format(DateTimeFormatter.BASIC_ISO_DATE)
+                                .getBytes(StandardCharsets.UTF_8);
+        b.put(stringAsBytes);
+    }
+    
+    public static final LocalDate getLocalDate(ByteBuffer b){
+        byte[] dst = new byte[8];
+        return LocalDate.parse(new String(dst, StandardCharsets.UTF_8), 
+                              DateTimeFormatter.BASIC_ISO_DATE);
+    }
+    
+    public static final void put(ByteBuffer b, LocalTime t){
+        byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.UTF_8);
+        b.put(stringAsBytes);
+    }
+    
+    public static final LocalTime getLocalTime(ByteBuffer b, LocalTime t){
+        byte[] dst = new byte[6];
+        return LocalTime.parse(new String(dst, StandardCharsets.UTF_8), 
+                               LOCAL_TIME);
+    }
+     
+    public static final void put(ByteBuffer b, LocalDateTime t){
+        byte[] stringAsBytes = t.format(LOCAL_DATETIME)
+                                .getBytes(StandardCharsets.UTF_8);
+        b.put(stringAsBytes);
+    }
+    
+    public static final LocalDateTime getLocalDateTime(ByteBuffer b){
+        byte[] dst = new byte[15];
+        return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
+                               LOCAL_TIME);
     }
     
 }
