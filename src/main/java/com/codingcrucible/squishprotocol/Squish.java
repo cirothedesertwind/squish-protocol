@@ -505,7 +505,7 @@ public final class Squish {
                                LOCAL_TIME);
     }
      
-    public static final void put(ByteBuffer b, LocalDateTime t){
+    public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
         byte[] stringAsBytes = t.format(LOCAL_DATETIME)
                                 .getBytes(StandardCharsets.UTF_8);
         b.put(stringAsBytes);
@@ -515,6 +515,23 @@ public final class Squish {
         byte[] dst = new byte[15];
         return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
                                LOCAL_DATETIME);
+    }
+    
+    public static final void putISOLocalDateTime(ByteBuffer b, LocalDateTime t){
+        byte[] stringAsBytes = t.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                                .getBytes(StandardCharsets.UTF_8);
+        putVarInt(b, stringAsBytes.length);
+        b.put(stringAsBytes);
+    }
+    
+    public static final LocalDateTime getISOLocalDateTime(ByteBuffer b){
+        int lengthInBytes = getVarInt(b);
+
+        byte[] dst = new byte[lengthInBytes];
+        b.get(dst);
+
+        return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8)
+                                 , DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
     
 }
