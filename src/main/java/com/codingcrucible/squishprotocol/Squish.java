@@ -39,13 +39,11 @@ import java.util.BitSet;
  * @version 0.1
  */
 public final class Squish {
-    
+
    // private static final DateTimeFormatter LOCAL_TIME = 
     //        DateTimeFormatter.ofPattern("HHmmss");
-    
     //private static final DateTimeFormatter LOCAL_DATETIME =
-      //      DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
-
+    //      DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
     private static final byte NONE = (byte) 0xA0;
     private static final byte SOME = (byte) 0xA1;
 
@@ -279,7 +277,7 @@ public final class Squish {
         putVarInt(b, a.length);
         b.asLongBuffer().put(a);
     }
-    
+
     public static final void put(ByteBuffer b, float[] a) {
         putVarInt(b, a.length);
         b.asFloatBuffer().put(a);
@@ -289,7 +287,7 @@ public final class Squish {
         putVarInt(b, a.length);
         b.asDoubleBuffer().put(a);
     }
-    
+
     public static final void putUByteArray(ByteBuffer b, int[] a) {
         putVarInt(b, a.length);
         for (int i = 0; i < a.length; i++)
@@ -313,20 +311,19 @@ public final class Squish {
         for (int i = 0; i < a.length; i++)
             putULong(b, a[i]);
     }
-    
+
     public static final void putULongArray(ByteBuffer b, BigInteger[] a) {
         putVarInt(b, a.length);
         for (BigInteger i : a)
             putULong(b, i);
     }
-    
-    public static final void putVarIntArray(ByteBuffer b, int[] a){
+
+    public static final void putVarIntArray(ByteBuffer b, int[] a) {
         putVarInt(b, a.length);
-        for (int i = 0; i < a.length; i++){
+        for (int i = 0; i < a.length; i++)
             putVarInt(b, a[i]);
-        }
     }
-    
+
     public static final byte[] getByteArray(ByteBuffer b) {
         int length = getVarInt(b);
 
@@ -362,7 +359,7 @@ public final class Squish {
 
         return dst;
     }
-    
+
     public static final float[] getFLoatArray(ByteBuffer b) {
         int length = getVarInt(b);
 
@@ -371,7 +368,7 @@ public final class Squish {
 
         return dst;
     }
-    
+
     public static final double[] getDoubleArray(ByteBuffer b) {
         int length = getVarInt(b);
 
@@ -384,78 +381,78 @@ public final class Squish {
     public static final int[] getUByteArray(ByteBuffer b) {
         int length = getVarInt(b);
         int[] dst = new int[length];
-        
+
         for (int i = 0; i < dst.length; i++)
             dst[i] = getUByte(b);
-        
+
         return dst;
     }
 
     public static final int[] getUShortArray(ByteBuffer b) {
         int length = getVarInt(b);
         int[] dst = new int[length];
-        
+
         for (int i = 0; i < dst.length; i++)
             dst[i] = getUShort(b);
-        
+
         return dst;
     }
 
     public static final long[] getUIntArray(ByteBuffer b) {
         int length = getVarInt(b);
         long[] dst = new long[length];
-        
+
         for (int i = 0; i < dst.length; i++)
             dst[i] = getUInt(b);
-        
+
         return dst;
     }
-    
+
     public static final BigInteger[] getULongArray(ByteBuffer b) {
         int length = getVarInt(b);
         BigInteger[] dst = new BigInteger[length];
-        
+
         for (int i = 0; i < dst.length; i++)
             dst[i] = getLargeULong(b);
-        
+
         return dst;
     }
-    
+
     public static final int[] getVarIntArray(ByteBuffer b) {
         int length = getVarInt(b);
         int[] dst = new int[length];
-        
+
         for (int i = 0; i < dst.length; i++)
             dst[i] = getVarInt(b);
-        
+
         return dst;
     }
-    
-    public static final void putStringArray(ByteBuffer b, String[] a){
+
+    public static final void putStringArray(ByteBuffer b, String[] a) {
         putVarInt(b, a.length);
         for (int i = 0; i < a.length; i++)
             putString(b, a[i]);
     }
-    
-    public static final String[] getStringArray(ByteBuffer b){
+
+    public static final String[] getStringArray(ByteBuffer b) {
         int length = getVarInt(b);
         String[] dst = new String[length];
-        
+
         for (int i = 0; i < dst.length; i++)
             dst[i] = getString(b);
-        
+
         return dst;
     }
-    
-    public static final void putBitArray(ByteBuffer b, BitSet bits){
+
+    public static final void putBitArray(ByteBuffer b, BitSet bits) {
         byte[] bitSetAsBytes = bits.toByteArray();
 
         putVarInt(b, bitSetAsBytes.length);
         putVarInt(b, bits.length());
         b.put(bitSetAsBytes);
     }
-    
-    public static final BitSet getBitArray(ByteBuffer b){
+
+    public static final BitSet getBitArray(ByteBuffer b) {
         int lengthInBytes = getVarInt(b);
         int nBits = getVarInt(b);
 
@@ -464,11 +461,15 @@ public final class Squish {
 
         return BitSet.valueOf(bitSetAsBytes).get(0, nBits);
     }
-    
-    /** Writes a binary.
-     * @param b,*
-     * @param bin the remaining bytes of the bin buffer as the binary*/
-     public static final void put(ByteBuffer b, ByteBuffer bin) {
+
+    /**
+     * Writes a binary.
+     *
+     * @param b,
+     *
+     * @param bin the remaining bytes of the bin buffer as the binary
+     */
+    public static final void put(ByteBuffer b, ByteBuffer bin) {
         putVarInt(b, bin.remaining());
         b.put(bin);
     }
@@ -481,57 +482,58 @@ public final class Squish {
 
         return ByteBuffer.wrap(dst);
     }
-    
-    public static final void put(ByteBuffer b, LocalDate t){
+
+    public static final void put(ByteBuffer b, LocalDate t) {
         byte[] stringAsBytes = t.format(DateTimeFormatter.BASIC_ISO_DATE)
-                                .getBytes(StandardCharsets.UTF_8);
+                .getBytes(StandardCharsets.US_ASCII);
         b.put(stringAsBytes);
     }
-    
-   /* public static final LocalDate getLocalDate(ByteBuffer b){
+
+    public static final LocalDate getLocalDate(ByteBuffer b) {
         byte[] dst = new byte[8];
-        return LocalDate.parse(new String(dst, StandardCharsets.UTF_8), 
-                              DateTimeFormatter.BASIC_ISO_DATE);
+        b.get(dst);
+        return LocalDate.parse(new String(dst, StandardCharsets.US_ASCII),
+                DateTimeFormatter.BASIC_ISO_DATE);
     }
+
+    /* 
+     public static final void put(ByteBuffer b, LocalTime t){
+     byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.UTF_8);
+     b.put(stringAsBytes);
+     }
     
-    public static final void put(ByteBuffer b, LocalTime t){
-        byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.UTF_8);
-        b.put(stringAsBytes);
-    }
-    
-    public static final LocalTime getLocalTime(ByteBuffer b, LocalTime t){
-        byte[] dst = new byte[6];
-        return LocalTime.parse(new String(dst, StandardCharsets.UTF_8), 
-                               LOCAL_TIME);
-    }
+     public static final LocalTime getLocalTime(ByteBuffer b, LocalTime t){
+     byte[] dst = new byte[6];
+     return LocalTime.parse(new String(dst, StandardCharsets.UTF_8), 
+     LOCAL_TIME);
+     }
      
-    public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
-        byte[] stringAsBytes = t.format(LOCAL_DATETIME)
-                                .getBytes(StandardCharsets.UTF_8);
-        b.put(stringAsBytes);
-    }
+     public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
+     byte[] stringAsBytes = t.format(LOCAL_DATETIME)
+     .getBytes(StandardCharsets.UTF_8);
+     b.put(stringAsBytes);
+     }
     
-    public static final LocalDateTime getSimpleLocalDateTime(ByteBuffer b){
-        byte[] dst = new byte[15];
-        return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
-                               LOCAL_DATETIME);
-    }*/
+     public static final LocalDateTime getSimpleLocalDateTime(ByteBuffer b){
+     byte[] dst = new byte[15];
+     return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
+     LOCAL_DATETIME);
+     }*/
     
-    public static final void putISOLocalDateTime(ByteBuffer b, LocalDateTime t){
+    public static final void putISOLocalDateTime(ByteBuffer b, LocalDateTime t) {
         byte[] stringAsBytes = t.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                                .getBytes(StandardCharsets.UTF_8);
+                .getBytes(StandardCharsets.US_ASCII);
         putVarInt(b, stringAsBytes.length);
         b.put(stringAsBytes);
     }
-    
-    public static final LocalDateTime getISOLocalDateTime(ByteBuffer b){
+
+    public static final LocalDateTime getISOLocalDateTime(ByteBuffer b) {
         int lengthInBytes = getVarInt(b);
 
         byte[] dst = new byte[lengthInBytes];
         b.get(dst);
 
-        return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8)
-                                 , DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        return LocalDateTime.parse(new String(dst, StandardCharsets.US_ASCII), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
-    
+
 }
