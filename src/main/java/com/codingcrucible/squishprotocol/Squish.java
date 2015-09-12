@@ -40,11 +40,11 @@ import java.util.BitSet;
  */
 public final class Squish {
     
-    private static final DateTimeFormatter LOCAL_TIME = 
-            DateTimeFormatter.ofPattern("HHmmss");
+   // private static final DateTimeFormatter LOCAL_TIME = 
+    //        DateTimeFormatter.ofPattern("HHmmss");
     
-    private static final DateTimeFormatter LOCAL_DATETIME =
-            DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
+    //private static final DateTimeFormatter LOCAL_DATETIME =
+      //      DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
 
     private static final byte NONE = (byte) 0xA0;
     private static final byte SOME = (byte) 0xA1;
@@ -228,7 +228,7 @@ public final class Squish {
         byte format = b.get();
 
         if (((format >> 7) & 1) == 0)
-            return 0x7F & b.get();
+            return 0x7F & format;
         else if (format == SIZE1)
             return 0xFF & b.get();
         else if (format == SIZE2)
@@ -488,7 +488,7 @@ public final class Squish {
         b.put(stringAsBytes);
     }
     
-    public static final LocalDate getLocalDate(ByteBuffer b){
+   /* public static final LocalDate getLocalDate(ByteBuffer b){
         byte[] dst = new byte[8];
         return LocalDate.parse(new String(dst, StandardCharsets.UTF_8), 
                               DateTimeFormatter.BASIC_ISO_DATE);
@@ -515,7 +515,7 @@ public final class Squish {
         byte[] dst = new byte[15];
         return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
                                LOCAL_DATETIME);
-    }
+    }*/
     
     public static final void putISOLocalDateTime(ByteBuffer b, LocalDateTime t){
         byte[] stringAsBytes = t.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
