@@ -38,7 +38,7 @@ public class BasicTests {
         assertEquals(ldt, target);
     }
 
-  /*  @Test
+    @Test
     public void testPutISOLocalDateTime() {
         LocalDateTime ldt = LocalDateTime.of(2123, Month.APRIL, 5, 6, 7, 8, 123456789);
         byte[] b = new byte[30];
@@ -70,5 +70,5 @@ public class BasicTests {
         System.out.println(ldt.toString());
         System.out.println(target.toString());
         assertEquals(ldt, target);
-    }*/
+    }
 }
