@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -36,6 +37,34 @@ public class BasicTests {
         LocalDate ldt = Squish.getLocalDate(bb);
 
         assertEquals(ldt, target);
+    }
+    
+        @Test
+    public void testPutLocalTime() {
+        LocalTime lt = LocalTime.of(6, 7, 8);
+        byte[] b = new byte[6];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        Squish.put(bb, lt);
+        bb.rewind();
+
+        String s = new String(b, StandardCharsets.US_ASCII);
+        assertEquals(s, "060708");
+    }
+
+    @Test
+    public void testGetLocalTime() {
+        LocalTime target = LocalTime.of(6, 7, 8);
+
+        byte[] b = new byte[6];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        bb.put("060708".getBytes(StandardCharsets.US_ASCII));
+        bb.rewind();
+
+        LocalTime lt = Squish.getLocalTime(bb);
+
+        assertEquals(lt, target);
     }
 
     @Test

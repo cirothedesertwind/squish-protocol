@@ -40,8 +40,8 @@ import java.util.BitSet;
  */
 public final class Squish {
 
-   // private static final DateTimeFormatter LOCAL_TIME = 
-    //        DateTimeFormatter.ofPattern("HHmmss");
+    private static final DateTimeFormatter LOCAL_TIME = 
+            DateTimeFormatter.ofPattern("HHmmss");
     //private static final DateTimeFormatter LOCAL_DATETIME =
     //      DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
     private static final byte NONE = (byte) 0xA0;
@@ -496,18 +496,19 @@ public final class Squish {
                 DateTimeFormatter.BASIC_ISO_DATE);
     }
 
-    /* 
+    
      public static final void put(ByteBuffer b, LocalTime t){
-     byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.UTF_8);
-     b.put(stringAsBytes);
+         byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.US_ASCII);
+         b.put(stringAsBytes);
      }
     
-     public static final LocalTime getLocalTime(ByteBuffer b, LocalTime t){
-     byte[] dst = new byte[6];
-     return LocalTime.parse(new String(dst, StandardCharsets.UTF_8), 
-     LOCAL_TIME);
+     public static final LocalTime getLocalTime(ByteBuffer b){
+         byte[] dst = new byte[6];
+         b.get(dst);
+         return LocalTime.parse(new String(dst, StandardCharsets.US_ASCII), 
+         LOCAL_TIME);
      }
-     
+     /* 
      public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
      byte[] stringAsBytes = t.format(LOCAL_DATETIME)
      .getBytes(StandardCharsets.UTF_8);
