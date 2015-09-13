@@ -39,6 +39,34 @@ public class BasicTests {
         assertEquals(ldt, target);
     }
     
+    @Test
+    public void testPutEncodedLocalDate() {
+        LocalDate ld = LocalDate.of(2123, Month.APRIL, 5);
+        byte[] b = new byte[4];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        Squish.putEncodedLocalDate(bb, ld);
+        bb.rewind();
+
+        int i = Squish.getInt(bb);
+        assertEquals(i, 21230405);
+    }
+
+    @Test
+    public void testGetEncodedLocalDate() {
+        LocalDate target = LocalDate.of(2123, Month.APRIL, 5);
+
+        byte[] b = new byte[4];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        bb.putInt(21230405);
+        bb.rewind();
+
+        LocalDate ldt = Squish.getEncodedLocalDate(bb);
+
+        assertEquals(ldt, target);
+    }
+    
         @Test
     public void testPutLocalTime() {
         LocalTime lt = LocalTime.of(6, 7, 8);

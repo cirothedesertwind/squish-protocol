@@ -496,7 +496,17 @@ public final class Squish {
         return LocalDate.parse(new String(dst, StandardCharsets.US_ASCII),
                 DateTimeFormatter.BASIC_ISO_DATE);
     }
+    
+    public static final void putEncodedLocalDate(ByteBuffer b, LocalDate t){
+        int date = Integer.parseInt(t.format(DateTimeFormatter.BASIC_ISO_DATE));
+        put(b, date);
+    }
 
+    public static final LocalDate getEncodedLocalDate(ByteBuffer b) {
+        int date = getInt(b);
+        String dateString = String.format("%08d", date);
+        return LocalDate.parse(dateString, DateTimeFormatter.BASIC_ISO_DATE);
+    }
     
      public static final void put(ByteBuffer b, LocalTime t){
          byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.US_ASCII);
