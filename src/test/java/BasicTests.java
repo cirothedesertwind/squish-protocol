@@ -67,7 +67,7 @@ public class BasicTests {
         assertEquals(ldt, target);
     }
     
-        @Test
+    @Test
     public void testPutLocalTime() {
         LocalTime lt = LocalTime.of(6, 7, 8);
         byte[] b = new byte[6];
@@ -91,6 +91,33 @@ public class BasicTests {
         bb.rewind();
 
         LocalTime lt = Squish.getLocalTime(bb);
+
+        assertEquals(lt, target);
+    }
+    
+    @Test
+    public void testPutEncodedLocalTime() {
+        LocalTime lt = LocalTime.of(6, 7, 8);
+        byte[] b = new byte[4];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        Squish.putEncodedLocalTime(bb, lt);
+        bb.rewind();
+
+        assertEquals(bb.getInt(), 60708);
+    }
+
+    @Test
+    public void testGetEncodedLocalTime() {
+        LocalTime target = LocalTime.of(6, 7, 8);
+
+        byte[] b = new byte[4];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        bb.putInt(60708);
+        bb.rewind();
+
+        LocalTime lt = Squish.getEncodedLocalTime(bb);
 
         assertEquals(lt, target);
     }

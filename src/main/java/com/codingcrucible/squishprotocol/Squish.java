@@ -519,6 +519,17 @@ public final class Squish {
          return LocalTime.parse(new String(dst, StandardCharsets.US_ASCII), 
          LOCAL_TIME);
      }
+     
+     public static final void putEncodedLocalTime(ByteBuffer b, LocalTime t){
+         int timeValue = Integer.parseInt(t.format(LOCAL_TIME));
+         put(b, timeValue);
+     }
+    
+     public static final LocalTime getEncodedLocalTime(ByteBuffer b){
+         int timeValue = b.getInt();
+         String timeString =  String.format("%06d", timeValue);
+         return LocalTime.parse(timeString, LOCAL_TIME);
+     }
       
     public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
         byte[] stringAsBytes = t.format(LOCAL_DATETIME)
