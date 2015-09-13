@@ -42,8 +42,9 @@ public final class Squish {
 
     private static final DateTimeFormatter LOCAL_TIME = 
             DateTimeFormatter.ofPattern("HHmmss");
-    //private static final DateTimeFormatter LOCAL_DATETIME =
-    //      DateTimeFormatter.ofPattern("yyyyMMddTHHmmss");
+    private static final DateTimeFormatter LOCAL_DATETIME =
+          DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+    
     private static final byte NONE = (byte) 0xA0;
     private static final byte SOME = (byte) 0xA1;
 
@@ -508,18 +509,19 @@ public final class Squish {
          return LocalTime.parse(new String(dst, StandardCharsets.US_ASCII), 
          LOCAL_TIME);
      }
-     /* 
-     public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
-     byte[] stringAsBytes = t.format(LOCAL_DATETIME)
-     .getBytes(StandardCharsets.UTF_8);
-     b.put(stringAsBytes);
-     }
+      
+    public static final void putSimpleLocalDateTime(ByteBuffer b, LocalDateTime t){
+        byte[] stringAsBytes = t.format(LOCAL_DATETIME)
+        .getBytes(StandardCharsets.US_ASCII);
+        b.put(stringAsBytes);
+    }
     
-     public static final LocalDateTime getSimpleLocalDateTime(ByteBuffer b){
-     byte[] dst = new byte[15];
-     return LocalDateTime.parse(new String(dst, StandardCharsets.UTF_8), 
-     LOCAL_DATETIME);
-     }*/
+    public static final LocalDateTime getSimpleLocalDateTime(ByteBuffer b){
+        byte[] dst = new byte[14];
+        b.get(dst);
+        return LocalDateTime.parse(new String(dst, StandardCharsets.US_ASCII), 
+        LOCAL_DATETIME);
+    }
     
     public static final void putISOLocalDateTime(ByteBuffer b, LocalDateTime t) {
         byte[] stringAsBytes = t.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)

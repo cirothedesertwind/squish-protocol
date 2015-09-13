@@ -66,6 +66,38 @@ public class BasicTests {
 
         assertEquals(lt, target);
     }
+    
+    @Test
+    public void testPutSimpleLocalDateTime() {
+        LocalDateTime ldt = LocalDateTime.of(2123, Month.APRIL, 5, 6, 7, 8, 123456789);
+        byte[] b = new byte[14];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        Squish.putSimpleLocalDateTime(bb, ldt);
+        bb.rewind();
+
+        String s = new String(b, StandardCharsets.US_ASCII);
+
+        assertEquals(s, "21230405060708");
+
+    }
+
+    @Test
+    public void testGetSimpleLocalDateTime() {
+        LocalDateTime target = LocalDateTime.of(2123, Month.APRIL, 5, 6, 7, 8);
+
+        byte[] b = new byte[14];
+        ByteBuffer bb = ByteBuffer.wrap(b);
+
+        bb.put("21230405060708".getBytes(StandardCharsets.US_ASCII));
+        bb.rewind();
+
+        LocalDateTime ldt = Squish.getSimpleLocalDateTime(bb);
+
+        System.out.println(ldt.toString());
+        System.out.println(target.toString());
+        assertEquals(ldt, target);
+    }
 
     @Test
     public void testPutISOLocalDateTime() {
