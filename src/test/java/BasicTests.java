@@ -50,6 +50,14 @@ public class BasicTests {
 
         int i = Squish.getInt(bb);
         assertEquals(i, 21230405);
+        
+        bb.rewind();
+        ld = LocalDate.of(325, Month.APRIL, 5);
+        Squish.putEncodedLocalDate(bb, ld);
+        bb.rewind();
+
+        i = Squish.getInt(bb);
+        assertEquals(i, 3250405);
     }
 
     @Test
@@ -65,7 +73,18 @@ public class BasicTests {
         LocalDate ldt = Squish.getEncodedLocalDate(bb);
 
         assertEquals(ldt, target);
+        
+        bb.rewind();
+        
+        target = LocalDate.of(325, Month.APRIL, 5);
+        bb.putInt(3250405);
+        bb.rewind();
+
+        ldt = Squish.getEncodedLocalDate(bb);
+
+        assertEquals(ldt, target);
     }
+    
     
     @Test
     public void testPutLocalTime() {
