@@ -39,7 +39,8 @@ The squish protocol is designed to be an easy to implement, small, bi-directiona
     * An array of bits.
     * A bit array is a varint specifying the length of the array in bytes followed by another varint specifying the number of bits, followed by the bit array represented as a series of bytes.
 * **Dates and Times**
-    * A date or time is a varint specifying the length of the encoding string and the date or time or both represented as a string according to ISO-8601.
+    * A date or time is a varint specifying the length of the encoding string and the date or time or both represented as a string according to a subset of ISO-8601.
+    * Encoded formats send the same information in a more compressed format.
 * **Binary**
     * A binary is a varint specifying the length of the binary blob in bytes followed by binary blob in bytes.
 * **Message**
