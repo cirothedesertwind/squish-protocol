@@ -14,46 +14,18 @@ public class BasicTests {
     @Test
     public void testPutLocalDate() {
         LocalDate ld = LocalDate.of(2123, Month.APRIL, 5);
-        byte[] b = new byte[8];
+        byte[] b = new byte[4];
         ByteBuffer bb = ByteBuffer.wrap(b);
 
         Squish.put(bb, ld);
         bb.rewind();
 
-        String s = new String(b, StandardCharsets.US_ASCII);
-        assertEquals(s, "21230405");
-    }
-
-    @Test
-    public void testGetLocalDate() {
-        LocalDate target = LocalDate.of(2123, Month.APRIL, 5);
-
-        byte[] b = new byte[8];
-        ByteBuffer bb = ByteBuffer.wrap(b);
-
-        bb.put("21230405".getBytes(StandardCharsets.US_ASCII));
-        bb.rewind();
-
-        LocalDate ldt = Squish.getLocalDate(bb);
-
-        assertEquals(ldt, target);
-    }
-    
-    @Test
-    public void testPutEncodedLocalDate() {
-        LocalDate ld = LocalDate.of(2123, Month.APRIL, 5);
-        byte[] b = new byte[4];
-        ByteBuffer bb = ByteBuffer.wrap(b);
-
-        Squish.putEncodedLocalDate(bb, ld);
-        bb.rewind();
-
         int i = Squish.getInt(bb);
         assertEquals(i, 21230405);
-        
+
         bb.rewind();
         ld = LocalDate.of(325, Month.APRIL, 5);
-        Squish.putEncodedLocalDate(bb, ld);
+        Squish.put(bb, ld);
         bb.rewind();
 
         i = Squish.getInt(bb);
@@ -61,7 +33,7 @@ public class BasicTests {
     }
 
     @Test
-    public void testGetEncodedLocalDate() {
+    public void testGetLocalDate() {
         LocalDate target = LocalDate.of(2123, Month.APRIL, 5);
 
         byte[] b = new byte[4];
@@ -70,64 +42,35 @@ public class BasicTests {
         bb.putInt(21230405);
         bb.rewind();
 
-        LocalDate ldt = Squish.getEncodedLocalDate(bb);
+        LocalDate ldt = Squish.getLocalDate(bb);
 
         assertEquals(ldt, target);
-        
+
         bb.rewind();
-        
+
         target = LocalDate.of(325, Month.APRIL, 5);
         bb.putInt(3250405);
         bb.rewind();
 
-        ldt = Squish.getEncodedLocalDate(bb);
+        ldt = Squish.getLocalDate(bb);
 
         assertEquals(ldt, target);
     }
-    
-    
+
     @Test
     public void testPutLocalTime() {
-        LocalTime lt = LocalTime.of(6, 7, 8);
-        byte[] b = new byte[6];
-        ByteBuffer bb = ByteBuffer.wrap(b);
-
-        Squish.put(bb, lt);
-        bb.rewind();
-
-        String s = new String(b, StandardCharsets.US_ASCII);
-        assertEquals(s, "060708");
-    }
-
-    @Test
-    public void testGetLocalTime() {
-        LocalTime target = LocalTime.of(6, 7, 8);
-
-        byte[] b = new byte[6];
-        ByteBuffer bb = ByteBuffer.wrap(b);
-
-        bb.put("060708".getBytes(StandardCharsets.US_ASCII));
-        bb.rewind();
-
-        LocalTime lt = Squish.getLocalTime(bb);
-
-        assertEquals(lt, target);
-    }
-    
-    @Test
-    public void testPutEncodedLocalTime() {
         LocalTime lt = LocalTime.of(6, 7, 8);
         byte[] b = new byte[4];
         ByteBuffer bb = ByteBuffer.wrap(b);
 
-        Squish.putEncodedLocalTime(bb, lt);
+        Squish.put(bb, lt);
         bb.rewind();
 
         assertEquals(bb.getInt(), 60708);
     }
 
     @Test
-    public void testGetEncodedLocalTime() {
+    public void testGetLocalTime() {
         LocalTime target = LocalTime.of(6, 7, 8);
 
         byte[] b = new byte[4];
@@ -136,11 +79,11 @@ public class BasicTests {
         bb.putInt(60708);
         bb.rewind();
 
-        LocalTime lt = Squish.getEncodedLocalTime(bb);
+        LocalTime lt = Squish.getLocalTime(bb);
 
         assertEquals(lt, target);
     }
-    
+
     @Test
     public void testPutSimpleLocalDateTime() {
         LocalDateTime ldt = LocalDateTime.of(2123, Month.APRIL, 5, 6, 7, 8, 123456789);

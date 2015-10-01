@@ -484,7 +484,7 @@ public final class Squish {
         return ByteBuffer.wrap(dst);
     }
     
-    public static final void putLocalDate(ByteBuffer b, LocalDate t){
+    public static final void put(ByteBuffer b, LocalDate t){
         int date = Integer.parseInt(t.format(DateTimeFormatter.BASIC_ISO_DATE));
         put(b, date);
     }
@@ -495,7 +495,7 @@ public final class Squish {
         return LocalDate.parse(dateString, DateTimeFormatter.BASIC_ISO_DATE);
     }
     
-     public static final void putLocalTime(ByteBuffer b, LocalTime t){
+     public static final void put(ByteBuffer b, LocalTime t){
          int timeValue = Integer.parseInt(t.format(LOCAL_TIME));
          put(b, timeValue);
      }
