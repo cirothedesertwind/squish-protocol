@@ -431,8 +431,8 @@ public final class Squish {
 
     public static final void putStringArray(ByteBuffer b, String[] a) {
         putVarInt(b, a.length);
-        for (int i = 0; i < a.length; i++)
-            putString(b, a[i]);
+        for (String a1 : a)
+            putString(b, a1);
     }
 
     public static final String[] getStringArray(ByteBuffer b) {
