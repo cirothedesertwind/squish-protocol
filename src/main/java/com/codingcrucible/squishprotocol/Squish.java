@@ -483,49 +483,24 @@ public final class Squish {
 
         return ByteBuffer.wrap(dst);
     }
-
-    public static final void put(ByteBuffer b, LocalDate t) {
-        byte[] stringAsBytes = t.format(DateTimeFormatter.BASIC_ISO_DATE)
-                .getBytes(StandardCharsets.US_ASCII);
-        b.put(stringAsBytes);
-    }
-
-    public static final LocalDate getLocalDate(ByteBuffer b) {
-        byte[] dst = new byte[8];
-        b.get(dst);
-        return LocalDate.parse(new String(dst, StandardCharsets.US_ASCII),
-                DateTimeFormatter.BASIC_ISO_DATE);
-    }
     
-    public static final void putEncodedLocalDate(ByteBuffer b, LocalDate t){
+    public static final void putLocalDate(ByteBuffer b, LocalDate t){
         int date = Integer.parseInt(t.format(DateTimeFormatter.BASIC_ISO_DATE));
         put(b, date);
     }
 
-    public static final LocalDate getEncodedLocalDate(ByteBuffer b) {
+    public static final LocalDate getLocalDate(ByteBuffer b) {
         int date = getInt(b);
         String dateString = String.format("%08d", date);
         return LocalDate.parse(dateString, DateTimeFormatter.BASIC_ISO_DATE);
     }
     
-     public static final void put(ByteBuffer b, LocalTime t){
-         byte[] stringAsBytes = t.format(LOCAL_TIME).getBytes(StandardCharsets.US_ASCII);
-         b.put(stringAsBytes);
-     }
-    
-     public static final LocalTime getLocalTime(ByteBuffer b){
-         byte[] dst = new byte[6];
-         b.get(dst);
-         return LocalTime.parse(new String(dst, StandardCharsets.US_ASCII), 
-         LOCAL_TIME);
-     }
-     
-     public static final void putEncodedLocalTime(ByteBuffer b, LocalTime t){
+     public static final void putLocalTime(ByteBuffer b, LocalTime t){
          int timeValue = Integer.parseInt(t.format(LOCAL_TIME));
          put(b, timeValue);
      }
     
-     public static final LocalTime getEncodedLocalTime(ByteBuffer b){
+     public static final LocalTime getLocalTime(ByteBuffer b){
          int timeValue = b.getInt();
          String timeString =  String.format("%06d", timeValue);
          return LocalTime.parse(timeString, LOCAL_TIME);
