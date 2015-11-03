@@ -120,8 +120,8 @@ public final class Squish {
     }
 
     public static final void putUInt(ByteBuffer b, long i) {
-        if (i < 0 || i > (1L << 31))
-            throw new IllegalArgumentException("This is used for numbers from 0 to 2^31-1");
+        if (i < 0 || i > (1L << 32))
+            throw new IllegalArgumentException("This is used for numbers from 0 to 2^32-1");
 
         b.putInt((int) i);
     }
